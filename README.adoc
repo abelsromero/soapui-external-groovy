@@ -1,18 +1,19 @@
 = Gradle template to code SoapUI Groovy scripts (soap-external-groovy)
 
-This a template project to develop SoapUI Groovy Scripts, used by `Groovy Script` test steps in nicer way.
+This a template project to develop SoapUI Groovy Scripts, used by `Groovy Script` test steps in a nicer way and in your favourite IDE!
 
 == Introduction
 
 Using SoapUI embedded Groovy editor is not the best tool for many reasons:
 
-* Not source code highlighting
+* No source code highlighting
 * No embedded help (documentation, auto-complete,etc.)
-* Hard to search amongst my script
+* Unable to search amongst several script
+* Unable to use VCS features (like git diff)
 * It's overall...clunky
 
-So, I decided to find a way to develop them in my IDE using Gradle.
-Just follow instructions below to get it working.
+So, I decided to find a way to develop them in my IDE using Gradle, and it's not hard.
+Just follow the instructions below to get it working.
 
 == Instructions
 
