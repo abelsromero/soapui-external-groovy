@@ -35,6 +35,7 @@ externalScript = new GroovyScriptEngine(projectPath).run(scriptFile, binding)
 . Create your script where you like. Remember to point the path in the test step.
 +
 This example will print the bindings.
++
 [source, groovy]
 ----
 binding.variables.each {
