@@ -1,0 +1,53 @@
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+    maven {
+        url "http://smartbearsoftware.com/repository/maven2"
+    }
+}
+
+ext {
+    soapuiVersion = '5.2.1'
+    soapuiImportedArtifacts = ['groovy-all', 'log4j']
+    // default versions
+    groovyVersion = '2.1.7'
+    log4jVersion = '1.2.14'
+
+}
+
+dependencies {
+    runtime("com.smartbear.soapui:soapui:$soapuiVersion") {
+        transitive = false
+    }
+}
+
+/**
+ * Parse XML to extract Groovy and Log4j dependencies without needing to download all the res dependencies
+ */
+afterEvaluate {
+
+    // Honouring offline mode
+    if (project.gradle.startParameter.isOffline()) {
+        logger.lifecycle "Offline mode detected. Disabling resolution of Groovy and Log4j"
+        logger.lifecycle "Using defaults\n" +
+                "\tgroovy:all:$groovyVersion\n" +
+                "\tlog4j:$log4jVersion"
+        compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+        compile "log4j:log4j:$log4jVersion"
+        return
+    }
+
+    def url = "${repositories['maven'].url}/com/smartbear/soapui/soapui/$soapuiVersion/soapui-${soapuiVersion}.pom"
+
+    def pom = new XmlSlurper().parse(url.toURL().newReader())
+    pom.dependencies.dependency.each { d ->
+        if (d.artifactId in soapuiImportedArtifacts) {
+            logger.info "Adding SoapUI dependency '${d.groupId}:${d.artifactId}:${d.version}'"
+            project.dependencies {
+                compile "${d.groupId}:${d.artifactId}:${d.version}"
+            }
+        }
+    }
+
+}

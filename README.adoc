@@ -1,0 +1,45 @@
+= Gradle template to code SoapUI Groovy scripts (soap-external-groovy)
+
+This a template project to develop SoapUI Groovy Scripts, used by `Groovy Script` test steps in nicer way.
+
+== Introduction
+
+Using SoapUI embedded Groovy editor is not the best tool for many reasons:
+
+* Not source code highlighting
+* No embedded help (documentation, auto-complete,etc.)
+* Hard to search amongst my script
+* It's overall...clunky
+
+So, I decided to find a way to develop them in my IDE using Gradle.
+Just follow instructions below to get it working.
+
+== Instructions
+
+. `git clone` the repo
+. Set the SoapUI version you're using in the `soapuiVersion` property in the `build.gradle`.
+The build script will import automatically (unless if in offline mode) proper Groovy and Log4j versions.
+. Import in your IDE
+. Create a `Groovy Script` test step like this (`PATH` and `FILENAME` are placeholders)
++
+[source, groovy]
+----
+// Use com.eviware.soapui.support.GroovyUtils to get the path of the project or set any path
+String projectPath = PATH
+String scriptFile = FILENAME
+
+// Run the script passing SoapUI's bindings (log, context and testRunner)
+externalScript = new GroovyScriptEngine(projectPath).run(scriptFile, binding)
+----
++
+. Create your script where you like. Remember to point the path in the test step.
++
+This example will print the bindings.
+[source, groovy]
+----
+binding.variables.each {
+    log.info it
+}
+----
+
+Current approach is a bit manual, but can be improved using naming conventions and properties to identify the script filenames.
