@@ -23,7 +23,7 @@ dependencies {
 }
 
 /**
- * Parse XML to extract Groovy and Log4j dependencies without needing to download all the res dependencies
+ * Parses POM to extract Groovy and Log4j versions without needing to download all the other SoapUI dependencies
  */
 afterEvaluate {
 
